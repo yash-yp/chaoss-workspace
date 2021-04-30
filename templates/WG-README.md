@@ -32,24 +32,22 @@ Interests and requirements of the working group.
 
 - History of the WG
 - Name changes in past (if any)
-- Any other relevant past information of the WGs
-<br/>
+- Any other relevant past information related to the WG
   
 ## Participate
 
 ### How to Join Us?
 
+A section guiding the user on how to join the working group.
+
 - Link to the Agenda WG document
-- Link to the [Participate Page](https://chaoss.community/participate/) on the Website
-<br/>
+- Link to the [Participate Page](https://chaoss.community/participate/) on the website
 
 [Link to Code of Conduct](https://github.com/chaoss/governance/blob/master/code-of-conduct.md)
-<br/>
 
 ## Contributing
 
-- Link to `CONTRIBUTING.md` file of the concerned WG
-<br/>
+Link to `CONTRIBUTING.md` file of the concerned WG.
 
 ## Metrics
 
@@ -58,10 +56,11 @@ Mainly a table of the focus areas and their goals linked to subfolders in the `f
 <br/>
 
 ### Released Metrics
+A section guiding the user to the released metrics.
 
 - Link to the [metrics page](https://chaoss.community/metrics/) on the website
-<br/>
-- Link to the [translations repo](https://github.com/chaoss/translations)
+
+Link to the [translations](https://github.com/chaoss/translations) repository.
 
 ## Contributors
 
