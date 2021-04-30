@@ -1,4 +1,4 @@
-#Template 
+# Template 
 
 This document should point to the master [contributing guide](page-yet-to-be-created) in the community handbook.
 
