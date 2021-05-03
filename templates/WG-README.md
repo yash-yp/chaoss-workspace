@@ -73,7 +73,7 @@ List containing names of contact persons (linked to their Github profiles) for t
 
 ### Amazing CHAOSS Project Contributors
 
-Link to [contributors](https://github.com/chaoss/website/blob/master/release/contributors.md) page on website.
+Link to [contributors](https://chaoss.community/metrics/#user-content-chaoss-contributors-include) page on website.
 <br/>
 
 
