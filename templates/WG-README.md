@@ -30,9 +30,9 @@ Interests and requirements of the working group.
 
 ### Background
 
-- History of the WG
+- History of the working group
 - Name changes in past (if any)
-- Any other relevant past information related to the WG
+- Any other relevant past information
   
 ## Participate
 
@@ -40,14 +40,14 @@ Interests and requirements of the working group.
 
 A section guiding the user on how to join the working group.
 
-- Link to the Agenda WG document
-- Link to the [Participate Page](https://chaoss.community/participate/) on the website
+- Link to the Agenda/Meeting-Minutes document
+- Link to the [Participate](https://chaoss.community/participate/) page on the website
 
-[Link to Code of Conduct](https://github.com/chaoss/governance/blob/master/code-of-conduct.md)
+Link to [Code of Conduct](https://github.com/chaoss/governance/blob/master/code-of-conduct.md)
 
 ## Contributing
 
-Link to `CONTRIBUTING.md` file of the concerned WG.
+Link to `CONTRIBUTING.md` of the concerned working group.
 
 ## Metrics
 
@@ -58,7 +58,7 @@ Mainly a table of the focus areas and their goals linked to subfolders in the `f
 ### Released Metrics
 A section guiding the user to the released metrics.
 
-- Link to the [metrics page](https://chaoss.community/metrics/) on the website
+- Link to the [metrics](https://chaoss.community/metrics/) page on the website
 
 Link to the [translations](https://github.com/chaoss/translations) repository.
 
@@ -66,19 +66,18 @@ Link to the [translations](https://github.com/chaoss/translations) repository.
 
 ### Chairs
 
-List containing names of contact persons (linked to their Github profiles) for the repository.
+List containing names of contact persons (linked to their Github profiles) for the working group.
 
 - 
 - 
 
 ### Amazing CHAOSS Project Contributors
 
-Link to [contributors](https://chaoss.community/metrics/#user-content-chaoss-contributors-include) page on website.
+Link to the [contributors](https://chaoss.community/metrics/#user-content-chaoss-contributors-include) page on the website.
 <br/>
-
 
 ## License
 
-- Link to the `LICENSE` file of the WG.
-- Copyright
+- Link to the `LICENSE` file
+- Copyright notice
 <br/>
