@@ -1,0 +1,25 @@
+% \pagestyle{empty}
+\usepackage{helvet}
+\usepackage{fontspec}
+\usepackage{hyperref}
+\usepackage{enumitem}
+\usepackage{amsfonts}
+
+
+\setmainfont{Arial}
+\setsansfont{Arial}
+
+\hypersetup{
+  pdftitle={Sample Report},
+  pdfauthor={yash2002109},
+  pdfsubject={pypandoc},
+  pdfkeywords={pypandoc,pdf,xelatex}
+}
+% set bullets
+\setlist[itemize,1]{label=$\bullet$}
+\setlist[itemize,2]{label=$\circ$}
+\setlist[itemize,3]{label=$\star$}
+
+%Begin each new markdown from new page
+\usepackage{sectsty}
+\sectionfont{\clearpage}
