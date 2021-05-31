@@ -75,6 +75,9 @@ if __name__=="__main__":
     root = os.path.join(script_dir_path, repo_name, "focus-areas")
     final_report_pdf = "test-release.pdf"
     converted_tex_files = []
+    file_count=0
+    copied_metric_md_list = []
+
 
     # code to copy all the images from each focus-area to a common images folder
     if not os.path.isdir("images"):
@@ -93,26 +96,46 @@ if __name__=="__main__":
         # check for images folder or if all elements of files are blacklisted
         if folder.endswith("images") or check_subarray(files, blacklisted_files_list):
             continue
-        copied_metric_md_list = []
+
         for file in files:
             if file not in blacklisted_files_list:
                 source_filepath = os.path.join(script_dir_path, folder, file)
                 dest_path = os.path.join(script_dir_path, file)
+                curr_focus_area_name = os.path.split(folder)[1]
                 copy_file(source_filepath, dest_path)
                 copied_metric_md_list.append(file)
-                print(os.path.relpath(folder))
-                print(os.path.split(folder)[1])
+
+                # print(copied_metric_md_list)
+                # print(os.path.relpath(folder))
+                # print(os.path.split(folder)[1])
+
                 tex_filename = re.sub(".md",".tex",file)
                 convert_md2tex(file,tex_filename)
                 converted_tex_files.append(tex_filename)
+                file_count+=1
 
-        # once converted to latex, individual metric files are no longer required
         delete_files(copied_metric_md_list)
+
+        # create subsidiary focus area files to include metrics automatically
+        if file_count != 0:
+            delete_files([curr_focus_area_name+".tex"])
+            copied_metric_md_list.sort()
+            f = open(curr_focus_area_name + ".tex", "a")
+            for metric_filename in copied_metric_md_list:
+                raw_filename=re.sub(".md","", metric_filename)
+                f.write(f"\include{{{raw_filename}}} \n")
+            f.close()
+            copied_metric_md_list = []
+
+
 
     # create required report
     repo_tex_filename = repo_name+".tex"
     convert_tex2pdf(repo_tex_filename,final_report_pdf)
 
     # code to remove inessential files
+    # once converted to latex, individual metric files are no longer required
     delete_files(converted_tex_files)
     delete_folder("images")
+    print(f"Total Metric Files Included: {file_count} ")
+
