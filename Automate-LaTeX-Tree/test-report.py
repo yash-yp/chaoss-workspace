@@ -127,8 +127,6 @@ if __name__=="__main__":
             f.close()
             copied_metric_md_list = []
 
-
-
     # create required report
     repo_tex_filename = repo_name+".tex"
     convert_tex2pdf(repo_tex_filename,final_report_pdf)
