@@ -1,0 +1,41 @@
+% \documentclass{ctexart} % for chinese
+% Packages
+\usepackage{amsmath}
+\usepackage{helvet}
+\usepackage{fontspec}
+\usepackage{hyperref}
+\usepackage{enumitem}
+\usepackage{amsfonts}
+% \usepackage{xeCJK}
+% \setmainfont[BoldFont=STHeiti,ItalicFont=STKaiti]{STSong}
+% \setsansfont[BoldFont=STHeiti]{STXihei}
+% \setCJKmainfont{AR PL KaitiM GB}
+%\setCJKsansfont{simhei.ttf}
+%\setCJKmonofont{simfang.ttf}
+% \setCJKmainfont{NotoSerifCJK-Regular}
+% \setCJKmainfont{SimSun}
+% \usepackage{xeCJK}
+% \usepackage{kotex}
+% \usepackage[space]{xeCJK}% use Latin font whenever possible
+% set Chinese fonts, as follows
+% \setCJKmainfont[BoldFont=STHeiti,ItalicFont=STKaiti]{STSong}
+% \setCJKsansfont[BoldFont=STHeiti]{STXihei}
+% \setCJKmonofont{STFangsong}
+% \setmainfont{Arial}
+% \setsansfont{Arial}
+
+
+\hypersetup{
+  pdftitle={Sample Report},
+  pdfauthor={yash2002109},
+  pdfsubject={pypandoc},
+  pdfkeywords={pypandoc,pdf,xelatex}
+}
+% set bullets for nested lists
+\setlist[itemize,1]{label=$\bullet$}
+\setlist[itemize,2]{label=$\circ$}
+\setlist[itemize,3]{label=$\diamond$}
+
+%Begin each new markdown from new page
+\usepackage{sectsty}
+\sectionfont{\clearpage}
