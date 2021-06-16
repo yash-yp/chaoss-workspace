@@ -32,7 +32,7 @@ wg-common:
     when:
     - activity-dates-and-times.md
     - burstiness.md
-    - review-cycle-duration-with-in-a-change-request.md
+    - review-cycle-duration-within-a-change-request.md
     - time-to-close.md
     - time-to-first-response.md
     where:
