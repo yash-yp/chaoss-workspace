@@ -38,7 +38,7 @@ def extract_question(metric):
     data = list(filter(None, data))
 
     # data[0] = '# Technical Fork'
-    metric_name = data[0][2:]
+    metric_name = ' '.join(data[0].split()[1:])
 
     # data[1] = 'Question: question part of the metric'
     metric_question = data[1].split(':')[1][1:]
