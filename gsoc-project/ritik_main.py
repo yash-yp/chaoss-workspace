@@ -63,11 +63,11 @@ def main():
     print("YML file structure: \n")
     pprint(data)
 
-    print("\nMoving to test-env dir...")
+    print("\nMoving to test-env-prev dir...")
     print("Removing files and folders [if any]...")
     print("Bringing side scripts...")
 
-    os.chdir('test-env')
+    os.chdir('test-env-prev')
     os.system('rm -rf *')
     os.mkdir('images')
     os.system('cp ../side-scripts/* .')
