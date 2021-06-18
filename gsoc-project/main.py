@@ -225,3 +225,5 @@ if __name__=="__main__":
         master_file.write("\n\end{document}")
     os.chdir("test-env/")
     convert_tex2pdf("master.tex", "Output.pdf")
+    copy_file("Output.pdf", "../Output.pdf")
+
