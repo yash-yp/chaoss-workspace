@@ -1,4 +1,4 @@
-import pathlib
+
 import os
 import shutil
 import pypandoc
@@ -24,7 +24,12 @@ def copy_file(source_filepath, dest_path):
 
 def copy_dir_files(source_folder_path, dest_folder_path):
 
-    files=os.listdir(source_folder_path)
+    try:
+        files=os.listdir(source_folder_path)
+    except NotADirectoryError:
+        print(f"Source path is not a directory :{source_folder_path}")
+    except:
+        print(f"Unable to list files in :{source_folder_path}")
 
     for fname in files:
         print(os.path.join(dest_folder_path,fname))
@@ -32,37 +37,48 @@ def copy_dir_files(source_folder_path, dest_folder_path):
             print(f"File with same name already exists at destination: {os.path.join(source_folder_path, fname)}")
 
         else:
-            print(f"Copying: {os.path.join(source_folder_path, fname)}")
-            shutil.copy2(os.path.join(source_folder_path, fname), dest_folder_path)
-            print(f"Copied Successfully")
+            try:
+                print(f"Copying: {os.path.join(source_folder_path, fname)}")
+                shutil.copy2(os.path.join(source_folder_path, fname), dest_folder_path)
+                print(f"Copied Successfully")
+            # except shutil.SameFileError:
+            #     print("Source and destination represents the same file.")
+            except PermissionError:
+                print("Permission denied.")
+            except:
+                print("Error occurred while copying file.")
+
 
 def convert_md2tex(md_filename, latex_filename):
-    print(f"Converting {md_filename} file to LaTeX")
-    # using 'gfm' results in page overflow of tables hence 'markdown_github'  used
-    output = pypandoc.convert_file(md_filename, 'latex', outputfile=latex_filename, extra_args=['-f', 'gfm'])
-
-    assert output == ""
-    print(f"Created successfully: {latex_filename}")
+    try:
+        print(f"Converting {md_filename} file to LaTeX")
+        # using 'gfm' results in page overflow of tables hence 'markdown_github'  used
+        output = pypandoc.convert_file(md_filename, 'latex', outputfile=latex_filename, extra_args=['-f', 'gfm'])
+        assert output == ""
+        print(f"Created successfully: {latex_filename}")
+    except:
+        print(f"Unable to convert to LaTeX: {md_filename}")
 
 def convert_tex2pdf(tex_filename, pdf_filename):
-    print(f"Converting {tex_filename} file to PDF")
 
-    output = pypandoc.convert_file(tex_filename, 'pdf', outputfile=pdf_filename, extra_args=['-f', 'latex',
-                                                                                            '--pdf-engine=xelatex',
-                                                                                             '-H', 'ritik_header.tex',
-                                                                                             '--highlight-style', 'zenburn',
-                                                                                             '-V', 'geometry:margin=0.8in',
-                                                                                             '-V', 'monofont:DejaVuSansMono.ttf',
-                                                                                             '-V', 'mathfont:texgyredejavu-math.otf',
-                                                                                             '-V', 'geometry:a4paper',
-                                                                                             '-V', 'colorlinks=true',
-                                                                                             '-V', 'linkcolour:blue',
-                                                                                             '-V', 'fontsize=12pt',
-                                                                                             '--toc', '--toc-depth= 3',
-                                                                                             '--include-before-body', 'cover.tex'
-                                                                                            ])
-    assert output == ""
-    print(f"Conversion process successful: {pdf_filename}")
+        print(f"Converting {tex_filename} file to PDF")
+
+        output = pypandoc.convert_file(tex_filename, 'pdf', outputfile=pdf_filename, extra_args=['-f', 'latex',
+                                                                                                '--pdf-engine=xelatex',
+                                                                                                 '-H', 'ritik_header.tex',
+                                                                                                 '--highlight-style', 'zenburn',
+                                                                                                 '-V', 'geometry:margin=0.8in',
+                                                                                                 '-V', 'monofont:DejaVuSansMono.ttf',
+                                                                                                 '-V', 'mathfont:texgyredejavu-math.otf',
+                                                                                                 '-V', 'geometry:a4paper',
+                                                                                                 '-V', 'colorlinks=true',
+                                                                                                 '-V', 'linkcolour:blue',
+                                                                                                 '-V', 'fontsize=12pt',
+                                                                                                 '--toc', '--toc-depth= 3',
+                                                                                                 '--include-before-body', 'cover.tex'
+                                                                                                ])
+        assert output == ""
+        print(f"Conversion process successful: {pdf_filename}")
 
 def delete_files(file_path_arr):
     for file_path in file_path_arr:
@@ -94,104 +110,38 @@ def load_yaml(file_path):
         print(exc)
 
 
-def copy_images(yaml_data):
-    # try using os.walk() to reduce time complexity
-    del yaml_data['focus-areas']
-
-    common_img_dir=os.path.join("images")
-
-    if not os.path.isdir(common_img_dir):
-        os.makedirs(common_img_dir)
-
-    for wg_name in yaml_data.keys():
-        if yaml_data[wg_name]['include-wg-flag']:
-            for focus_area in yaml_data[wg_name]["focus-areas"].keys():
-                fa_image_dir = os.path.join(wg_name, "focus-areas", focus_area, "images")
-                if os.path.isdir(fa_image_dir):
-                    for image in os.listdir(fa_image_dir):
-                        src_image_path=os.path.join(fa_image_dir, image)
-                        des_image_path=os.path.join(common_img_dir, image)
-                        # print(image_path)
-                        copy_file(src_image_path, des_image_path)
-
-def decrease_level(metric_path):
-    print(f"Decreasing heading levels by 2 in metric: {metric_path}")
-    cmd = 'sed -i "s/^\#/###/g" ' + metric_path
-    os.system(cmd)
-
-# def copy_metrics(yaml_data):
+# def copy_images(yaml_data):
 #     # try using os.walk() to reduce time complexity
+# if "focus-areas" in yaml_data:
 #     del yaml_data["focus-areas"]
-#     test_dir = "test-env-prev"
-#     if not os.path.isdir(test_dir):
-#         os.makedirs(test_dir)
+#
+#     common_img_dir=os.path.join("images")
+#
+#     if not os.path.isdir(common_img_dir):
+#         os.makedirs(common_img_dir)
 #
 #     for wg_name in yaml_data.keys():
 #         if yaml_data[wg_name]['include-wg-flag']:
 #             for focus_area in yaml_data[wg_name]["focus-areas"].keys():
-#                 if yaml_data[wg_name]["focus-areas"][focus_area] is not None:
-#                     for metric in yaml_data[wg_name]["focus-areas"][focus_area]:
-#                         metric_path = os.path.join(wg_name, "focus-areas", focus_area, metric)
-#                         copy_file(metric_path, test_dir)
+#                 fa_image_dir = os.path.join(wg_name, "focus-areas", focus_area, "images")
+#                 if os.path.isdir(fa_image_dir):
+#                     for image in os.listdir(fa_image_dir):
+#                         src_image_path=os.path.join(fa_image_dir, image)
+#                         des_image_path=os.path.join(common_img_dir, image)
+#                         # print(image_path)
+#                         copy_file(src_image_path, des_image_path)
 
+def decrease_level(metric_path):
+
+    print(f"Decreasing heading levels by 2 in metric: {metric_path}")
+    cmd = 'sed -i "s/^\#/###/g" ' + metric_path
+    os.system(cmd)
 
 if __name__=="__main__":
-    '''
-    script_dir_path = pathlib.Path(__file__).parent.absolute()
-    common_images_folder_path = os.path.join(script_dir_path, "images")
-    repo_name = "wg-common"
-    blacklisted_files_list = ["README.md"]
-    root = os.path.join(script_dir_path, repo_name, "focus-areas")
-    final_report_pdf = "test-release.pdf"
-    converted_tex_files = []
 
-    # code to copy all the images from each focus-area to a common images folder
-    if not os.path.isdir("images"):
-        os.mkdir("images")
-
-    for folder, sub_folders, files in os.walk(root):
-        for file in files:
-            if folder.endswith("images"):
-                source_filepath = os.path.join(script_dir_path, folder, file)
-                dest_path = os.path.join(script_dir_path, "images", file)
-                copy_file(source_filepath,dest_path)
-
-    # copy required metric files and convert them to latex
-    for folder, sub_folders, files in os.walk(root):
-
-        # check for images folder or if all elements of files are blacklisted
-        if folder.endswith("images") or check_subarray(files, blacklisted_files_list):
-            continue
-        copied_metric_md_list = []
-        for file in files:
-            if file not in blacklisted_files_list:
-                source_filepath = os.path.join(script_dir_path, folder, file)
-                dest_path = os.path.join(script_dir_path, file)
-                copy_file(source_filepath, dest_path)
-                copied_metric_md_list.append(file)
-                print(os.path.relpath(folder))
-                print(os.path.split(folder)[1])
-                tex_filename = re.sub(".md",".tex",file)
-                convert_md2tex(file,tex_filename)
-                converted_tex_files.append(tex_filename)
-
-        # once converted to latex, individual metric files are no longer required
-        delete_files(copied_metric_md_list)
-
-    # create required report
-    repo_tex_filename = repo_name+".tex"
-    convert_tex2pdf(repo_tex_filename,final_report_pdf)
-
-    # code to remove inessential files
-    delete_files(converted_tex_files)
-    delete_folder("images")
-    '''
     included_wgs = []
-    yml_filename="repo-structure.yml"
+    yml_filename="WG_conf.yml"
     master_file_path="master.tex"
-    # load_yaml(yml_filename)
-    # copy_images(load_yaml("repo-structure.yml"))
-    # copy_metrics(load_yaml("repo-structure.yml"))
     test_dir = "test_env"
     current_dir="./"
     delete_folder(test_dir)
@@ -201,16 +151,17 @@ if __name__=="__main__":
     else:
         os.chdir(test_dir)
     # copy_file(os.path.join("..", yml_filename), yml_filename)
-    if not os.path.isdir("wg-common"):
-        shutil.copytree("../wg-common", "wg-common")
-    if not os.path.isdir("wg-value"):
-        shutil.copytree("../wg-value", "wg-value")
+    # if not os.path.isdir("wg-common"):
+    #     shutil.copytree("../wg-common", "wg-common")
+    # if not os.path.isdir("wg-value"):
+    #     shutil.copytree("../wg-value", "wg-value")
 
     copy_dir_files("../active_user_input",current_dir)
     copy_dir_files("../passive_user_input",current_dir)
-    copy_images(load_yaml(yml_filename))
+    # copy_images(load_yaml(yml_filename))
     yaml_data = load_yaml(yml_filename)
-    del yaml_data["focus-areas"]
+    if "focus-areas" in yaml_data:
+        del yaml_data["focus-areas"]
     # copy_file("../master.tex", "master.tex")
     # copy_file("../header.tex", "header.tex")
 
@@ -218,6 +169,8 @@ if __name__=="__main__":
     for wg_name in yaml_data.keys():
         if yaml_data[wg_name]['include-wg-flag']:
             # code to clone repo with specified branch in yaml data here
+            subprocess.check_call(['git', 'clone', '-b', yaml_data[wg_name]['github-branch'], yaml_data[wg_name]['github-link'], wg_name])
+            ##
             included_wgs.append(wg_name)
             focus_areas=[]
             for focus_area, metrics in yaml_data[wg_name]["focus-areas"].items():
@@ -244,9 +197,13 @@ if __name__=="__main__":
                     focus_areas.append(focus_area)
                     print(converted_tex_files)
                     focus_area_tex_file_path= os.path.join(current_dir, focus_area+".tex")
+                    if not os.path.isdir("images"):
+                        os.makedirs("images")
+                    copy_dir_files(os.path.join(wg_name, "focus-areas",focus_area,"images"), os.path.join(current_dir,"images"))
                     # print(focus_area_tex_file_path)
-                    focus_area_README = os.path.join(wg_name, "focus-areas",focus_area, "README.md" )
+                    focus_area_README = os.path.join(wg_name, "focus-areas",focus_area, "README.md")
                     helper.generate_focus_areas(focus_area, focus_area_README, metrics)
+
                     with open(focus_area_tex_file_path, "a") as fa_tex_file:
                         # script to automatically create the focus area table with focus area name from yml file
                         fa_tex_file.write("\n")
@@ -267,3 +224,7 @@ if __name__=="__main__":
         master_file.write("\n\end{document}")
     # os.chdir("test-env-prev/")
     convert_tex2pdf(master_file_path, "Output.pdf")
+    copy_file("Output.pdf", "../")
+    os.chdir("../")
+    # delete_folder(test_dir)
+
