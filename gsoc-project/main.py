@@ -49,7 +49,7 @@ def convert_tex2pdf(tex_filename, pdf_filename):
 
     output = pypandoc.convert_file(tex_filename, 'pdf', outputfile=pdf_filename, extra_args=['-f', 'latex',
                                                                                             '--pdf-engine=xelatex',
-                                                                                             '-H', 'header.tex',
+                                                                                             '-H', 'ritik_header.tex',
                                                                                              '--highlight-style', 'zenburn',
                                                                                              '-V', 'geometry:margin=0.8in',
                                                                                              '-V', 'monofont:DejaVuSansMono.ttf',
@@ -58,7 +58,8 @@ def convert_tex2pdf(tex_filename, pdf_filename):
                                                                                              '-V', 'colorlinks=true',
                                                                                              '-V', 'linkcolour:blue',
                                                                                              '-V', 'fontsize=12pt',
-                                                                                             '--toc', '--toc-depth= 3'
+                                                                                             '--toc', '--toc-depth= 3',
+                                                                                             '--include-before-body', 'cover.tex'
                                                                                             ])
     assert output == ""
     print(f"Conversion process successful: {pdf_filename}")
@@ -77,7 +78,7 @@ def delete_folder(folder_path):
     try:
         if os.path.isdir(folder_path):
             print(f"Deleting folder: {folder_path}")
-            shutil.rmtree("images")
+            shutil.rmtree(folder_path)
             print("Deleted Successfully")
     except:
         print(f"Unable to delete folder: {folder_path}")
@@ -117,65 +118,6 @@ def decrease_level(metric_path):
     print(f"Decreasing heading levels by 2 in metric: {metric_path}")
     cmd = 'sed -i "s/^\#/###/g" ' + metric_path
     os.system(cmd)
-
-def master_file_content():
-    content=r'''% Author = yash2002109
-% Date = 11/04/21
-
-% Preamble
-\documentclass[12pt]{article}
-
-% Packages
-\usepackage{amsmath}
-\usepackage{helvet}
-\usepackage{fontspec}
-\usepackage{hyperref}
-\usepackage{enumitem}
-\usepackage{amsfonts}
-\usepackage{unicode-math}
-\usepackage{iftex}
-\usepackage{fancyvrb}
-\usepackage{longtable}
-\usepackage{booktabs}
-\usepackage{graphicx}
-\usepackage{hyperref}
-\usepackage{xcolor}
-\usepackage{ulem}
-\usepackage{geometry}
-\usepackage{setspace}
-\usepackage{babel}
-\usepackage{package}
-\usepackage{polyglossia}
-\usepackage{csquotes}
-\usepackage{microtype}
-\usepackage{xurl}
-\usepackage{bookmark}
-
-
-\setmainfont{Arial}
-\setsansfont{Arial}
-
-\hypersetup{
-  pdftitle={Sample Report},
-  pdfauthor={yash2002109},
-  pdfsubject={pypandoc},
-  pdfkeywords={pypandoc,pdf,xelatex}
-}
-% set bullets
-\setlist[itemize,1]{label=$\bullet$}
-\setlist[itemize,2]{label=$\circ$}
-\setlist[itemize,3]{label=$\star$}
-
-%Begin each new file from new page
-\usepackage{sectsty}
-\sectionfont{\clearpage}
-
-% Document
-\begin{document}
-'''
-    # with open(master_file_path, "w+") as master:
-    #     master.write(content)
-    return content
 
 # def copy_metrics(yaml_data):
 #     # try using os.walk() to reduce time complexity
@@ -252,6 +194,7 @@ if __name__=="__main__":
     # copy_metrics(load_yaml("repo-structure.yml"))
     test_dir = "test_env"
     current_dir="./"
+    delete_folder(test_dir)
     if not os.path.isdir(test_dir):
         os.makedirs(test_dir)
         os.chdir(test_dir)
@@ -317,8 +260,7 @@ if __name__=="__main__":
                 for fa in focus_areas:
                     wg_tex_file.write(f"\input{{{fa}}} \n")
     #
-    with open(master_file_path, "w") as master_file:
-        master_file.write(master_file_content())
+    with open(master_file_path, "a") as master_file:
         master_file.write("\n")
         for wg in included_wgs:
             master_file.write(f"\include{{{wg}}} \n")
