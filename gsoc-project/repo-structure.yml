@@ -27,19 +27,20 @@ wg-common:
   github-branch: abs-to-rel
   focus-areas:
     what:
-    - technical-fork.md
+#    - technical-fork.md
     - types-of-contributions.md
+    who:
+#    - contributor-location.md
+    - contributors.md
+    - organizational-diversity.md
     when:
-    - activity-dates-and-times.md
+#    - activity-dates-and-times.md
     - burstiness.md
     - review-cycle-duration-within-a-change-request.md
     - time-to-close.md
     - time-to-first-response.md
     where:
-    who:
-    - contributor-location.md
-    - contributors.md
-    - organizational-diversity.md
+
 
 
 # WG-VALUE
@@ -58,7 +59,7 @@ wg-value:
     - job-opportunities.md
     - organizational-project-skill-demand.md
     organizational-value:
-    - labor-investment.md
+#     - labor-investment.md
     social-value:
 
 

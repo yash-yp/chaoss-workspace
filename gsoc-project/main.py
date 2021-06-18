@@ -42,7 +42,8 @@ def convert_tex2pdf(tex_filename, pdf_filename):
                                                                                              '-V', 'colorlinks=true',
                                                                                              '-V', 'linkcolour:blue',
                                                                                              '-V', 'fontsize=12pt',
-                                                                                             '--toc', '--toc-depth= 1'
+                                                                                             '--toc', '--toc-depth= 1',
+                                                                                             '--include-before-body', 'cover.tex'
                                                                                             ])
     assert output == ""
     print(f"Conversion process successful: {pdf_filename}")
@@ -169,9 +170,14 @@ if __name__=="__main__":
     # copy_images(load_yaml("repo-structure.yml"))
     # copy_metrics(load_yaml("repo-structure.yml"))
     test_dir = "test-env"
+    shutil.rmtree(test_dir)
     if not os.path.isdir(test_dir):
         os.makedirs(test_dir)
+    copy_file("master.tex", "test-env/master.tex")
+    copy_file("header.tex", "test-env/header.tex")
+    copy_file("cover.tex", "test-env/cover.tex")
     copy_images(load_yaml("repo-structure.yml"))
+    copy_file("Chaoss_logo.png", "test-env/images/Chaoss_logo.png")
     yaml_data = load_yaml("repo-structure.yml")
     del yaml_data["focus-areas"]
 
