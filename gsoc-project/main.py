@@ -1,4 +1,3 @@
-
 import os
 import shutil
 import pypandoc
@@ -41,18 +40,16 @@ def copy_dir_files(source_folder_path, dest_folder_path):
                 print(f"Copying: {os.path.join(source_folder_path, fname)}")
                 shutil.copy2(os.path.join(source_folder_path, fname), dest_folder_path)
                 print(f"Copied Successfully")
-            # except shutil.SameFileError:
-            #     print("Source and destination represents the same file.")
+            except shutil.SameFileError:
+                print("Source and destination represents the same file.")
             except PermissionError:
                 print("Permission denied.")
             except:
                 print("Error occurred while copying file.")
 
-
 def convert_md2tex(md_filename, latex_filename):
     try:
         print(f"Converting {md_filename} file to LaTeX")
-        # using 'gfm' results in page overflow of tables hence 'markdown_github'  used
         output = pypandoc.convert_file(md_filename, 'latex', outputfile=latex_filename, extra_args=['-f', 'gfm'])
         assert output == ""
         print(f"Created successfully: {latex_filename}")
@@ -65,7 +62,7 @@ def convert_tex2pdf(tex_filename, pdf_filename):
 
         output = pypandoc.convert_file(tex_filename, 'pdf', outputfile=pdf_filename, extra_args=['-f', 'latex',
                                                                                                 '--pdf-engine=xelatex',
-                                                                                                 '-H', 'ritik_header.tex',
+                                                                                                 '-H', 'header_1.tex',
                                                                                                  '--highlight-style', 'zenburn',
                                                                                                  '-V', 'geometry:margin=0.8in',
                                                                                                  '-V', 'monofont:DejaVuSansMono.ttf',
