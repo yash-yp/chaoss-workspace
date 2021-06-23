@@ -27,7 +27,7 @@
 
 wg-common:
   include-wg-flag: True
-  wg-name: wg-common
+  wg-name: Common Metrics WG
   github-link: https://github.com/chaoss/wg-common
   github-branch: master
   focus-areas:
@@ -50,8 +50,8 @@ wg-common:
 # WG-VALUE
 
 wg-value:
-  include-wg-flag: False
-  wg-name: wg-value
+  include-wg-flag: True
+  wg-name: Value WG
   github-link: https://github.com/ritik-malik/wg-value
   github-branch: master
   focus-areas:
