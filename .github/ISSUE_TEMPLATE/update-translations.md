@@ -2,7 +2,7 @@
 name: Update Translations
 about: Use this template to update translations when changes occur in the original WGs.
 title: "<change> - <affected-WG> - <metric/focus area name>"
-labels: [Chinese, Spanish]
+labels: duplicate, bug
 
 ---
 
